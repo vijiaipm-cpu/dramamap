@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DramaMap — No VPN. No Ads. Just Drama.</title>
+    <!-- Google Fonts for premium typography pairing -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <!-- Link to compile main stylesheet compiling Tailwind CSS inside Vite -->
+    <link rel="stylesheet" href="/src/index.css" />
+    <style>
+      /* Smooth transitions for navigation and filter pill selections */
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: #0A0F1E;
+        color: #ffffff;
+        overflow-x: hidden;
+      }
+      .display-font {
+        font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      }
+      /* Custom card hover styling with glowing light overlays */
+      .drama-card {
+        background-color: #1A1F35;
+        border: 1px solid #2A2F45;
+        border-radius: 16px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .drama-card:hover {
+        transform: translateY(-4px);
+        border-color: #FF2D6B;
+        box-shadow: 0 10px 30px -10px rgba(255, 45, 107, 0.35);
+      }
+      /* Hide standard scrollbars for slider rows */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+    </style>
+  </head>
+  <body class="selection:bg-[#FF2D6B] selection:text-white">
+
+    <!-- Glowing spotlight background effects for Linear.app feel -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[650px] bg-[radial-gradient(circle_at_top,rgba(255,45,107,0.15)_0%,rgba(10,15,30,0)_70%)] pointer-events-none -z-10"></div>
+    <!-- Vector Grid overlay lines -->
+    <div class="absolute top-0 left-0 w-full h-[700px] bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none -z-20 opacity-50"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="min-h-screen flex flex-col justify-between">
+      
+      <!-- STICKY HEADER -->
+      <header class="sticky top-0 z-40 bg-[#0A0F1E]/80 backdrop-blur-md border-b border-brand-border transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+          
+          <!-- Logo -->
+          <a href="#" onclick="resetSearchAndFilters(event)" class="flex items-center gap-2 group">
+            <span class="text-2xl transition-transform duration-300 group-hover:scale-110">📍</span>
+            <span class="display-font text-xl font-bold tracking-tight text-white group-hover:text-brand-pink transition-colors">
+              Drama<span class="text-brand-pink">Map</span>
+            </span>
+          </a>
+
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="#home" onclick="scrollToElement('home', event)" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="#how-it-works" onclick="scrollToElement('how-it-works', event)" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Browse & How To</a>
+            <a href="#community" onclick="scrollToElement('community', event)" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Community</a>
+          </nav>
+
+          <!-- Action Button -->
+          <div class="flex items-center gap-4">
+            <button onclick="openTipModal()" class="display-font text-xs font-semibold uppercase tracking-wider bg-brand-pink text-white px-5 py-2.5 rounded-full hover:bg-brand-pink/90 hover:shadow-[0_0_15px_rgba(255,45,107,0.4)] active:scale-95 transition-all cursor-pointer">
+              Submit a Tip
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN APP CONTENT -->
+      <main class="flex-grow">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
+          <!-- Premium badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-card border border-brand-border rounded-full text-xs font-medium text-gray-300 mb-6 animate-fade-in">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-pink animate-ping"></span>
+            <span>100% Free Curations — Updated Today</span>
+          </div>
+
+          <!-- Huge Title -->
+          <h1 class="display-font text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-4 max-w-3xl mx-auto leading-tight">
+            No VPN. No Ads.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-[#FF5E89]">Just Drama.</span>
+          </h1>
+
+          <!-- Tagline -->
+          <p class="text-lg sm:text-xl text-gray-400 max-w-xl mx-auto mb-10">
+            Instantly discover where to watch your favorite Asian dramas for free on official platforms completely ad-free.
+          </p>
+
+          <!-- Large Centered Search Bar -->
+          <div class="max-w-2xl mx-auto mb-12 relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-brand-pink to-purple-600 rounded-2xl blur opacity-25 group-focus-within:opacity-50 transition duration-300"></div>
+            <div class="relative flex items-center bg-[#131930] border border-brand-border rounded-2xl overflow-hidden focus-within:border-brand-pink transition duration-300">
+              <!-- Magnifying glass icon -->
+              <span class="pl-5 text-gray-400 pr-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </span>
+              <input 
+                type="text" 
+                id="dramaSearch" 
+                placeholder="Search any Korean, Chinese, Japanese, Thai drama..." 
+                oninput="handleSearch(this.value)"
+                class="w-full py-4.5 pr-5 bg-transparent border-0 outline-hidden font-medium text-white placeholder-gray-500 text-base focus:ring-0"
+              />
+              <!-- Clear Search Button -->
+              <button 
+                id="clearSearchBtn" 
+                onclick="clearSearch()" 
+                class="hidden pr-5 text-gray-400 hover:text-white transition-colors"
+                title="Clear Search"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+            <button onclick="focusSearch()" class="display-font text-sm font-bold bg-brand-pink text-white px-8 py-3.5 rounded-full hover:bg-brand-pink/90 hover:shadow-[0_0_20px_rgba(255,45,107,0.3)] active:scale-95 transition-all duration-200 cursor-pointer">
+              Search Now
+            </button>
+            <a href="#trending-section" onclick="scrollToElement('trending-section', event)" class="display-font text-sm font-bold border border-brand-border text-white px-8 py-3.5 rounded-full hover:bg-brand-card hover:border-gray-500 active:scale-95 transition-all duration-200 cursor-pointer">
+              Browse Free
+            </a>
+          </div>
+
+          <!-- LANGUAGE FILTER BAR -->
+          <div class="max-w-xl mx-auto flex flex-wrap justify-center items-center gap-2 p-1.5 bg-[#121626] rounded-full border border-brand-border">
+            <button onclick="filterLanguage('All')" id="pill-All" class="filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer bg-brand-pink text-white shadow-[0_0_12px_rgba(255,45,107,0.35)]">
+              All
+            </button>
+            <button onclick="filterLanguage('Korean')" id="pill-Korean" class="filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-gray-400 hover:text-white transition-all duration-300 cursor-pointer">
+              Korean 🇰🇷
+            </button>
+            <button onclick="filterLanguage('Chinese')" id="pill-Chinese" class="filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-gray-400 hover:text-white transition-all duration-300 cursor-pointer">
+              Chinese  🇨🇳
+            </button>
+            <button onclick="filterLanguage('Japanese')" id="pill-Japanese" class="filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-gray-400 hover:text-white transition-all duration-300 cursor-pointer">
+              Japanese 🇯🇵
+            </button>
+            <button onclick="filterLanguage('Thai')" id="pill-Thai" class="filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-gray-400 hover:text-white transition-all duration-300 cursor-pointer">
+              Thai 🇹🇭
+            </button>
+          </div>
+        </section>
+
+        <!-- DYNAMIC VIEWS CONTAINER -->
+        <!-- VIEW 1: DEFAULT HOME (CURATED CATEGORIES) -->
+        <div id="defaultHomeView" class="block transition-all duration-500">
+          
+          <!-- TRENDING NOW SECTION -->
+          <section id="trending-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+            <div class="flex items-center justify-between mb-8">
+              <div>
+                <h2 class="display-font text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+                  <span>🔥</span> Trending Now
+                </h2>
+                <p class="text-sm text-gray-400 mt-1">Most searched dramas on official free platforms</p>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="scrollTrending(-1)" class="w-10 h-10 rounded-full bg-brand-card border border-brand-border flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition cursor-pointer">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+                <button onclick="scrollTrending(1)" class="w-10 h-10 rounded-full bg-brand-card border border-brand-border flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition cursor-pointer">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Horizontal Scroll Row -->
+            <div id="trendingRow" class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 relative">
+              <!-- Cards will be populated here via javascript -->
+            </div>
+          </section>
+
+          <!-- FREE THIS WEEK SECTION -->
+          <section id="free-this-week-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="mb-8">
+              <h2 class="display-font text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+                <span>Free This Week</span> 🎉
+              </h2>
+              <p class="text-sm text-gray-400 mt-1">Full series unlocked without VPN or subscription</p>
+            </div>
+
+            <!-- Grid -->
+            <div id="freeThisWeekGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- 4 dramas populated here via javascript -->
+            </div>
+          </section>
+
+        </div>
+
+        <!-- VIEW 2: SEARCH RESULTS (EXHAUSTIVE FILTERGRID) -->
+        <div id="searchResultsView" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 transition-all duration-500">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-6 mb-8 gap-4">
+            <div>
+              <h2 id="searchResultsHeader" class="display-font text-2xl sm:text-3xl font-extrabold text-white">
+                Search Results
+              </h2>
+              <p id="searchResultsSub" class="text-sm text-gray-400 mt-1">Found matching titles</p>
+            </div>
+            <button onclick="clearSearchAndFilters()" class="text-sm text-brand-pink hover:text-brand-pink/80 font-semibold flex items-center gap-1 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              Back to Home / Curated
+            </button>
+          </div>
+
+          <!-- Empty State (Hidden by Default) -->
+          <div id="searchResultsEmptyState" class="hidden py-16 text-center max-w-md mx-auto">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-bold text-white mb-2">No dramas found</h3>
+            <p class="text-gray-400 text-sm mb-6">
+              We couldn't find any results. Submit a community tip so we can verify and add it!
+            </p>
+            <button onclick="openTipModal()" class="display-font text-xs font-bold uppercase tracking-wider bg-brand-pink text-white px-6 py-3 rounded-full hover:bg-brand-pink/90 hover:shadow-[0_0_15px_rgba(255,45,107,0.3)] active:scale-95 transition-all cursor-pointer">
+              Submit a Tip Now
+            </button>
+          </div>
+
+          <!-- Search Results Grid -->
+          <div id="searchResultsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamic matching cards here -->
+          </div>
+        </div>
+
+        <!-- HOW IT WORKS SECTION -->
+        <section id="how-it-works" class="bg-[#0B1024] border-y border-brand-border/40 py-20 relative">
+          <!-- Ambient subtle container glow -->
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,45,107,0.04)_0%,transparent_50%)] pointer-events-none"></div>
+          
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+              <h2 class="display-font text-2xl sm:text-4xl font-extrabold text-white mb-4">
+                How It Works
+              </h2>
+              <p class="text-gray-400 leading-relaxed">
+                Enjoy hassle-free streaming of award-winning Asian entertainment without the complications of geoblocks, shady ads, or expensive VPN software.
+              </p>
+            </div>
+
+            <!-- 3 Steps -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+              
+              <!-- Step 1 -->
+              <div class="bg-brand-card/60 border border-brand-border rounded-2xl p-8 relative hover:border-brand-pink/40 transition duration-300">
+                <div class="absolute -top-5 left-8 w-10 h-10 rounded-xl bg-brand-pink text-white flex items-center justify-center font-bold font-mono text-sm shadow-[0_0_15px_rgba(255,45,107,0.4)]">
+                  1
+                </div>
+                <div class="text-3xl mb-4 mt-2">🔍</div>
+                <h3 class="display-font text-lg font-bold text-white mb-2">Search any drama</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Enter any Korean, Chinese, Japanese, or Thai drama title. No registrations required to find matches.
+                </p>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="bg-brand-card/60 border border-brand-border rounded-2xl p-8 relative hover:border-brand-pink/40 transition duration-300">
+                <div class="absolute -top-5 left-8 w-10 h-10 rounded-xl bg-brand-pink text-white flex items-center justify-center font-bold font-mono text-sm shadow-[0_0_15px_rgba(255,45,107,0.4)]">
+                  2
+                </div>
+                <div class="text-3xl mb-4 mt-2">📺</div>
+                <h3 class="display-font text-lg font-bold text-white mb-2">Find free platform</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Instantly locate the official provider (Viki, YouTube, public archives) offering the show for free.
+                </p>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="bg-brand-card/60 border border-brand-border rounded-2xl p-8 relative hover:border-brand-pink/40 transition duration-300">
+                <div class="absolute -top-5 left-8 w-10 h-10 rounded-xl bg-gradient-to-r from-brand-pink to-purple-600 text-white flex items-center justify-center font-bold font-mono text-sm shadow-[0_0_15px_rgba(255,45,107,0.4)]">
+                  3
+                </div>
+                <div class="text-3xl mb-4 mt-2">▶️</div>
+                <h3 class="display-font text-lg font-bold text-white mb-2">Watch directly, no VPN</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Click the direct deep-link and stream uninterrupted in high resolution with official subtitle tracks.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- COMMUNITY TIPS SECTION -->
+        <section id="community" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div class="text-center max-w-xl mx-auto mb-12">
+            <span class="text-brand-pink text-xs font-bold uppercase tracking-widest block mb-2">Fan Collaboration</span>
+            <h2 class="display-font text-2xl sm:text-4xl font-extrabold text-white mb-4">
+              Community Tips
+            </h2>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Discovered a working free link, dynamic public index, or a localized YouTube playlist for a drama? Share it below!
+            </p>
+          </div>
+
+          <!-- Community Tips Grid Container -->
+          <div id="communityTipsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Tip Cards render here dynamically -->
+          </div>
+
+          <!-- Action block below tips -->
+          <div class="text-center">
+            <button onclick="openTipModal()" class="display-font inline-flex items-center gap-2 bg-brand-card border border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs active:scale-95 transition-all duration-300 cursor-pointer">
+              <span>✍️</span> Submit a New community Tip
+            </button>
+          </div>
+        </section>
+
+        <!-- SPONSOR MONETIZATION STRIP PARTNERSHIP -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <div class="bg-gradient-to-r from-[#11162B] via-[#1C2240] to-[#11162B] border border-brand-border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <!-- Background mesh -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(255,45,107,0.05)_0%,transparent_50%)] pointer-events-none"></div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-brand-dark/80 border border-brand-border flex items-center justify-center shrink-0">
+                <span class="text-xl">🛡️</span>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="bg-brand-pink/15 text-brand-pink px-2.5 py-0.5 rounded-full text-3xs font-extrabold uppercase tracking-wide">Featured Recommendation</span>
+                  <span class="text-gray-500 text-3xs font-mono">AD / COMMISSION EARNED</span>
+                </div>
+                <h3 class="display-font text-lg font-bold text-white mt-1">Tired of buffering or slow streaming?</h3>
+                <p class="text-gray-400 text-xs mt-1 max-w-xl">
+                  While DramaMap indexes free platforms, a premium VPN unlocks Japanese regional YouTube uploads & highest quality server speeds on Viki Premium.
+                </p>
+              </div>
+            </div>
+
+            <a href="https://nordvpn.com/" target="_blank" rel="noopener noreferrer" class="display-font shrink-0 text-xs font-bold uppercase tracking-wider bg-transparent hover:bg-white hover:text-black hover:border-white border border-brand-border text-white px-6 py-3.5 rounded-xl transition-all duration-300 w-full md:w-auto text-center flex items-center justify-center gap-2 group cursor-pointer">
+              Try NordVPN Free for 30 Days <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="bg-[#050812] border-t border-brand-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
+            <div class="text-center md:text-left">
+              <a href="#" onclick="resetSearchAndFilters(event)" class="inline-flex items-center gap-2 group mb-3">
+                <span class="text-xl">📍</span>
+                <span class="display-font text-lg font-bold text-white">Drama<span class="text-brand-pink">Map</span></span>
+              </a>
+              <p class="text-xs text-gray-500 max-w-xs">
+                No VPN. No Ads. Just Drama.<br>The ultimate directory for free-to-watch Asian television.
+              </p>
+            </div>
+            
+            <!-- Quick footer links -->
+            <div class="flex flex-wrap items-center justify-center gap-8 text-xs text-gray-400">
+              <a href="#home" onclick="scrollToElement('home', event)" class="hover:text-white transition-colors">Home</a>
+              <a href="#trending-section" onclick="scrollToElement('trending-section', event)" class="hover:text-white transition-colors">Browse</a>
+              <a href="#community" onclick="scrollToElement('community', event)" class="hover:text-white transition-colors">Community</a>
+              <a href="https://github.com" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+            </div>
+          </div>
+
+          <div class="border-t border-brand-border/40 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-3xs text-gray-500 uppercase tracking-widest font-mono">
+            <div>
+              &copy; 2026 DramaMap. Licensed under MIT.
+            </div>
+            <div class="text-brand-pink font-semibold">
+              Built for drama fans, by drama fans ❤️
+            </div>
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- SUBMIT A TIP MODAL POPUP -->
+    <div id="tipModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden transition-all duration-300 opacity-0" onclick="handleBackdropClick(event)">
+      
+      <!-- Modal Contents Container -->
+      <div class="bg-brand-card border border-brand-border rounded-2xl w-full max-w-lg overflow-hidden shadow-[0_25px_50px_-12px_rgba(255,45,107,0.3)] transform scale-95 transition-all duration-300" id="tipModalContent">
+        
+        <!-- Modal Title Header -->
+        <div class="px-6 py-5 border-b border-brand-border flex items-center justify-between bg-brand-dark/20">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">✍️</span>
+            <h3 class="display-font text-lg font-bold text-white">Submit a Community Tip</h3>
+          </div>
+          <button onclick="closeTipModal()" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-brand-border transition-colors cursor-pointer" title="Close Modal">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Success Banner Inside Modal (Hidden by Default) -->
+        <div id="tipModalSuccess" class="hidden bg-emerald-900/40 border-b border-emerald-500/30 text-emerald-300 px-6 py-4 flex items-center gap-3">
+          <span class="text-xl">🙏</span>
+          <span class="text-xs font-semibold">Thanks! Your tip helps the community so much. It is now published live on this page!</span>
+        </div>
+
+        <!-- Submission Form -->
+        <form id="tipForm" onsubmit="submitCommunityTip(event)" class="p-6 space-y-4">
+          
+          <!-- Drama Name Input -->
+          <div>
+            <label class="block text-3xs font-bold uppercase tracking-wider text-gray-400 mb-1.5" for="formDramaName">Drama Name *</label>
+            <input 
+              type="text" 
+              id="formDramaName" 
+              placeholder="e.g. Descendants of the Sun" 
+              required
+              class="w-full bg-[#121626] border border-brand-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-brand-pink placeholder-gray-500 transition duration-200"
+            />
+          </div>
+
+          <!-- Platform / Link Input -->
+          <div>
+            <label class="block text-3xs font-bold uppercase tracking-wider text-gray-400 mb-1.5" for="formPlatform">Platform or Stream Link *</label>
+            <input 
+              type="text" 
+              id="formPlatform" 
+              placeholder="e.g. Free on YouTube SBS Playlist or Viki" 
+              required
+              class="w-full bg-[#121626] border border-brand-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-brand-pink placeholder-gray-500 transition duration-200"
+            />
+          </div>
+
+          <!-- Tip description Input -->
+          <div>
+            <label class="block text-3xs font-bold uppercase tracking-wider text-gray-400 mb-1.5" for="formTip">Your Stream Tip / Tip Details *</label>
+            <textarea 
+              id="formTip" 
+              rows="3" 
+              placeholder="Explain how to watch for free. E.g. search for SBS play index, subtitles are sub-tracks, runs without regional locks." 
+              required
+              class="w-full bg-[#121626] border border-brand-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-brand-pink placeholder-gray-500 transition duration-200 resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Contributor Your Name Input -->
+          <div>
+            <label class="block text-3xs font-bold uppercase tracking-wider text-gray-400 mb-1.5" for="formYourName">Your Name / Pseudonym</label>
+            <input 
+              type="text" 
+              id="formYourName" 
+              placeholder="e.g. K-DramaStar9" 
+              class="w-full bg-[#121626] border border-brand-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-hidden focus:border-brand-pink placeholder-gray-500 transition duration-200"
+            />
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex items-center justify-end gap-3 pt-4 border-t border-brand-border">
+            <button type="button" onclick="closeTipModal()" class="display-font text-xs font-semibold text-gray-400 hover:text-white px-5 py-2.5 hover:bg-brand-border rounded-xl transition duration-200 cursor-pointer">
+              Cancel
+            </button>
+            <button type="submit" class="display-font text-xs font-bold uppercase tracking-wider bg-brand-pink text-white px-6 py-2.5 rounded-xl hover:bg-brand-pink/90 hover:shadow-[0_0_15px_rgba(255,45,107,0.3)] transition duration-200 cursor-pointer">
+              Submit Tip
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+
+    <!-- DRAMAMAP GLOBAL CLIENT ENGINE JS -->
+    <script>
+      // 1. HARDCODED DRAMA DATA (Exhaustive array with curated styling details)
+      const DRAMA_DATA = [
+        {
+          id: "crash-landing-on-you",
+          title: "Crash Landing on You",
+          language: "Korean",
+          flag: "🇰🇷",
+          genre: "Romance Drama",
+          platform: "Netflix",
+          badgeType: "Free with Base Account",
+          badgeColor: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+          link: "https://www.netflix.com/title/81159258",
+          rating: "4.9",
+          year: 2019,
+          episodes: "16 Episodes",
+          gradient: "from-pink-600 via-rose-700 to-indigo-900"
+        },
+        {
+          id: "business-proposal",
+          title: "Business Proposal",
+          language: "Korean",
+          flag: "🇰🇷",
+          genre: "Romance Comedy",
+          platform: "Netflix",
+          badgeType: "Free on Trial",
+          badgeColor: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+          link: "https://www.netflix.com/title/81509490",
+          rating: "4.8",
+          year: 2022,
+          episodes: "12 Episodes",
+          gradient: "from-purple-600 via-fuchsia-700 to-sky-900"
+        },
+        {
+          id: "the-untamed",
+          title: "The Untamed",
+          language: "Chinese",
+          flag: "🇨🇳",
+          genre: "Fantasy Romance",
+          platform: "Viki",
+          badgeType: "Free on Viki",
+          badgeColor: "bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/30",
+          link: "https://www.viki.com/tv/36657c-the-untamed",
+          rating: "4.9",
+          year: 2019,
+          episodes: "50 Episodes",
+          gradient: "from-indigo-900 via-slate-800 to-cyan-900"
+        },
+        {
+          id: "meteor-garden",
+          title: "Meteor Garden",
+          language: "Chinese",
+          flag: "🇨🇳",
+          genre: "Classic Romance",
+          platform: "YouTube",
+          badgeType: "Free on YouTube",
+          badgeColor: "bg-red-500/15 text-red-400 border-red-500/30",
+          link: "https://www.youtube.com/results?search_query=meteor+garden+full+episodes+official",
+          rating: "4.5",
+          year: 2018,
+          episodes: "50 Episodes",
+          gradient: "from-amber-600 via-orange-700 to-blue-900"
+        },
+        {
+          id: "vincenzo",
+          title: "Vincenzo",
+          language: "Korean",
+          flag: "🇰🇷",
+          genre: "Action Thriller",
+          platform: "Netflix",
+          badgeType: "Free with Base Account",
+          badgeColor: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+          link: "https://www.netflix.com/title/81365087",
+          rating: "4.9",
+          year: 2021,
+          episodes: "20 Episodes",
+          gradient: "from-amber-950 via-slate-900 to-stone-900"
+        },
+        {
+          id: "my-love-from-the-star",
+          title: "My Love From The Star",
+          language: "Korean",
+          flag: "🇰🇷",
+          genre: "Sci-Fi Romance",
+          platform: "Viki",
+          badgeType: "Free on Viki",
+          badgeColor: "bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/30",
+          link: "https://www.viki.com/tv/20503c-my-love-from-the-star",
+          rating: "4.7",
+          year: 2013,
+          episodes: "21 Episodes",
+          gradient: "from-cyan-900 via-purple-900 to-rose-950"
+        },
+        {
+          id: "word-of-honor",
+          title: "Word of Honor",
+          language: "Chinese",
+          flag: "🇨🇳",
+          genre: "Fantasy Xianxia",
+          platform: "Viki",
+          badgeType: "Free on Viki",
+          badgeColor: "bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/30",
+          link: "https://www.viki.com/tv/37701c-word-of-honor",
+          rating: "4.8",
+          year: 2021,
+          episodes: "36 Episodes",
+          gradient: "from-blue-900 via-sky-800 to-indigo-950"
+        },
+        {
+          id: "goblin",
+          title: "Goblin",
+          language: "Korean",
+          flag: "🇰🇷",
+          genre: "Epic Fantasy Romance",
+          platform: "Netflix",
+          badgeType: "Free on Netflix",
+          badgeColor: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+          link: "https://www.netflix.com/title/81012531",
+          rating: "4.9",
+          year: 2016,
+          episodes: "16 Episodes",
+          gradient: "from-sky-900 via-indigo-950 to-purple-900"
+        },
+        {
+          id: "love-by-chance",
+          title: "Love by Chance",
+          language: "Thai",
+          flag: "🇹🇭",
+          genre: "Romance Drama",
+          platform: "YouTube",
+          badgeType: "Free on YouTube",
+          badgeColor: "bg-red-500/15 text-red-400 border-red-500/30",
+          link: "https://www.youtube.com/results?search_query=love+by+chance+thai+drama+official",
+          rating: "4.6",
+          year: 2018,
+          episodes: "14 Episodes",
+          gradient: "from-emerald-800 via-teal-900 to-indigo-950"
+        },
+        {
+          id: "girl-from-nowhere",
+          title: "Girl From Nowhere",
+          language: "Thai",
+          flag: "🇹🇭",
+          genre: "Mystery Thriller",
+          platform: "Netflix",
+          badgeType: "Free on Netflix",
+          badgeColor: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+          link: "https://www.netflix.com/title/80241947",
+          rating: "4.8",
+          year: 2018,
+          episodes: "21 Episodes",
+          gradient: "from-rose-950 via-red-900 to-stone-950"
+        }
+      ];
+
+      // Curated categories
+      const TRENDING_IDS = ["crash-landing-on-you", "business-proposal", "the-untamed", "meteor-garden", "vincenzo", "my-love-from-the-star"];
+      const FREE_THIS_WEEK_IDS = ["vincenzo", "my-love-from-the-star", "word-of-honor", "goblin"];
+
+      // 2. DEFAULT COMMUNITY TIPS DATA
+      const DEFAULT_COMMUNITY_TIPS = [
+        {
+          id: "tip-1",
+          name: "KimchiQueen_2026",
+          drama: "Crash Landing on You",
+          tip: "YouTube SBS official channel has a fully translated clip compiler without VPN, though Netflix is local for full HD audio formats!",
+          upvotes: 68,
+          avatarGradient: "from-rose-500 to-pink-500"
+        },
+        {
+          id: "tip-2",
+          name: "Chuan_Dramas",
+          drama: "The Untamed",
+          tip: "Play on YouTube (WeTV official playlist) with AdBlockers to watch the special edition cuts. Subtitles are pre-rendered into English/Spanish streams directly!",
+          upvotes: 43,
+          avatarGradient: "from-violet-500 to-purple-500"
+        },
+        {
+          id: "tip-3",
+          name: "HaikuHacker",
+          drama: "Goblin (Guardian)",
+          tip: "Streaming works perfectly unlocked on Viki if you swap browser user agents to mobile iOS and load from standard browser mode without the Viki subscription overlay!",
+          upvotes: 95,
+          avatarGradient: "from-blue-500 to-indigo-500"
+        }
+      ];
+
+      // Local State properties
+      let currentLanguage = 'All';
+      let currentSearch = '';
+
+      // Initialize App Node Events
+      window.addEventListener('DOMContentLoaded', () => {
+        // Load data on start
+        registerInitialLocalStorage();
+        renderCuratedSections();
+        renderCommunityTips();
+        updateViewsState();
+      });
+
+      // LocalStorage registration
+      function registerInitialLocalStorage() {
+        if (!localStorage.getItem('DRAMA_TIPS_STORE')) {
+          localStorage.setItem('DRAMA_TIPS_STORE', JSON.stringify(DEFAULT_COMMUNITY_TIPS));
+        }
+        if (!localStorage.getItem('UPVOTES_TIPS_STORE')) {
+          localStorage.setItem('UPVOTES_TIPS_STORE', JSON.stringify({}));
+        }
+      }
+
+      // 3. CURATED SECTIONS RENDERING
+      function renderCuratedSections() {
+        const trendingRow = document.getElementById('trendingRow');
+        const freeThisWeekGrid = document.getElementById('freeThisWeekGrid');
+
+        // Render Trending Row
+        const trendingDramas = DRAMA_DATA.filter(d => TRENDING_IDS.includes(d.id));
+        trendingRow.innerHTML = trendingDramas.map(drama => createCardHTML(drama, true)).join('');
+
+        // Render Free This Week Grid
+        const freeWeekDramas = DRAMA_DATA.filter(d => FREE_THIS_WEEK_IDS.includes(d.id));
+        freeThisWeekGrid.innerHTML = freeWeekDramas.map(drama => createCardHTML(drama, false)).join('');
+      }
+
+      // Generate Card HTML layout with high-end poster representation
+      function createCardHTML(drama, isSlider = false) {
+        // Compute short letters for poster styling
+        const initials = drama.title.split(' ').map(n => n[0]).join('').substring(0, 3).toUpperCase();
+        
+        return `
+          <div class="drama-card shrink-0 ${isSlider ? 'w-64' : 'w-full'} flex flex-col group relative overflow-hidden" id="card-${drama.id}-${isSlider ? 'slider' : 'grid'}">
+            <!-- Glass poster with neon design -->
+            <div class="h-44 bg-gradient-to-br ${drama.gradient} relative flex items-center justify-center p-4">
+              <!-- Geometric neon layout layer inside poster -->
+              <div class="absolute inset-0 bg-black/20 opacity-60 group-hover:opacity-10 transition duration-300"></div>
+              <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
+              
+              <!-- Initials overlay styling like a design draft -->
+              <span class="display-font text-3xl font-extrabold text-white/30 group-hover:text-white/60 tracking-wider transition-colors duration-400 select-none">
+                ${initials}
+              </span>
+              
+              <!-- Hot pink visual border tag -->
+              <div class="absolute top-3 left-3 bg-[#0A0F1E]/80 backdrop-blur-md border border-brand-border px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <span class="text-xs">${drama.flag}</span>
+                <span class="text-3xs font-bold uppercase tracking-widest text-[#B2B9E2]">${drama.language}</span>
+              </div>
+
+              <!-- Rating Badge -->
+              <div class="absolute top-3 right-3 bg-brand-pink text-white px-2 py-0.5 rounded-lg text-3xs font-extrabold flex items-center gap-0.5 shadow-lg">
+                <span>★</span><span>${drama.rating}</span>
+              </div>
+            </div>
+
+            <!-- Card Bottom Specs details -->
+            <div class="p-5 flex-grow flex flex-col justify-between">
+              <div>
+                <!-- Metadata header -->
+                <div class="flex items-center gap-2 text-3xs text-gray-400 font-semibold mb-1 uppercase tracking-wide">
+                  <span>${drama.year}</span>
+                  <span>•</span>
+                  <span>${drama.episodes}</span>
+                </div>
+                <!-- Title -->
+                <h3 class="display-font font-bold text-base text-white group-hover:text-brand-pink transition-colors line-clamp-1 mb-1">
+                  ${drama.title}
+                </h3>
+                <!-- Genre -->
+                <span class="inline-block text-3xs text-gray-400 border border-brand-border px-2 py-0.5 rounded-full bg-brand-dark/20 font-medium mb-4">
+                  ${drama.genre}
+                </span>
+              </div>
+
+              <!-- Watch Trigger -->
+              <div class="flex items-center justify-between border-t border-brand-border/40 pt-4 mt-2">
+                <div class="flex flex-col">
+                  <span class="text-4xs font-bold tracking-widest text-gray-500 uppercase">Provider</span>
+                  <span class="text-xs text-white font-medium flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 
+                    ${drama.platform}
+                  </span>
+                </div>
+                <a href="${drama.link}" target="_blank" rel="noopener noreferrer" class="display-font text-3xs text-white font-bold bg-[#2A2F45] hover:bg-brand-pink hover:shadow-[0_0_10px_rgba(255,45,107,0.3)] border border-brand-border px-3.5 py-2 rounded-lg transition-all flex items-center gap-1">
+                  Watch Free <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. COMMUNITY TIPS LIST RENDERING
+      function renderCommunityTips() {
+        const tipsContainer = document.getElementById('communityTipsContainer');
+        const tips = JSON.parse(localStorage.getItem('DRAMA_TIPS_STORE')) || DEFAULT_COMMUNITY_TIPS;
+        const subbedUpvotes = JSON.parse(localStorage.getItem('UPVOTES_TIPS_STORE')) || {};
+
+        tipsContainer.innerHTML = tips.map(tip => {
+          const initials = tip.name ? tip.name[0].toUpperCase() : '👤';
+          const isUpvoted = !!subbedUpvotes[tip.id];
+          const upvoteCount = tip.upvotes;
+
+          return `
+            <div class="bg-brand-card border border-brand-border hover:border-brand-pink/50 rounded-2xl p-6 transition duration-300 relative flex flex-col justify-between" id="tip-${tip.id}">
+              <div>
+                <!-- User Profile Head -->
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br ${tip.avatarGradient || 'from-brand-pink to-indigo-600'} flex items-center justify-center text-sm font-bold text-white shadow-md">
+                    ${initials}
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-white mb-0.5">${tip.name || 'Anonymous Fan'}</h4>
+                    <span class="text-4xs font-bold tracking-wider text-brand-pink uppercase">Verified Tipster</span>
+                  </div>
+                </div>
+
+                <!-- Drama Reference -->
+                <div class="mb-3">
+                  <span class="text-4xs font-bold tracking-wider text-gray-500 uppercase block mb-0.5">DRAMA</span>
+                  <span class="display-font text-xs font-semibold text-white bg-brand-dark/50 border border-brand-border/60 rounded-md px-2.5 py-1 inline-block">
+                    ${tip.drama}
+                  </span>
+                </div>
+
+                <!-- Tip content body -->
+                <p class="text-xs text-gray-400 leading-relaxed italic mb-6">
+                  "${tip.tip}"
+                </p>
+              </div>
+
+              <!-- Upvote container -->
+              <div class="flex items-center justify-between border-t border-brand-border/40 pt-4">
+                <span class="text-3xs text-gray-500 font-mono">Found this helpful?</span>
+                <button 
+                  onclick="upvoteCommunityTip('${tip.id}')" 
+                  class="display-font text-xs font-bold px-3 py-1.5 rounded-lg border ${isUpvoted ? 'bg-brand-pink/20 text-brand-pink border-brand-pink' : 'bg-brand-dark border-brand-border text-gray-300 hover:text-white hover:border-brand-pink'} active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <span>👍</span> 
+                  <span id="upvote-count-${tip.id}">${upvoteCount}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Upvoting Action logic for true persistent user interaction
+      function upvoteCommunityTip(tipId) {
+        const tips = JSON.parse(localStorage.getItem('DRAMA_TIPS_STORE')) || DEFAULT_COMMUNITY_TIPS;
+        const subbedUpvotes = JSON.parse(localStorage.getItem('UPVOTES_TIPS_STORE')) || {};
+
+        if (subbedUpvotes[tipId]) {
+          // If already upvoted, we downvote/remove user upvote
+          delete subbedUpvotes[tipId];
+          const foundTipIndex = tips.findIndex(t => t.id === tipId);
+          if (foundTipIndex !== -1) {
+            tips[foundTipIndex].upvotes--;
+          }
+        } else {
+          // Add upvote
+          subbedUpvotes[tipId] = true;
+          const foundTipIndex = tips.findIndex(t => t.id === tipId);
+          if (foundTipIndex !== -1) {
+            tips[foundTipIndex].upvotes++;
+          }
+        }
+
+        localStorage.setItem('DRAMA_TIPS_STORE', JSON.stringify(tips));
+        localStorage.setItem('UPVOTES_TIPS_STORE', JSON.stringify(subbedUpvotes));
+
+        // Re-render and update UI micro value directly
+        renderCommunityTips();
+      }
+
+      // 5. SEARCH & FILTER HARMONIZATION
+      function handleSearch(searchQuery) {
+        currentSearch = searchQuery.trim();
+        const clearBtn = document.getElementById('clearSearchBtn');
+        if (currentSearch) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+        updateViewsState();
+      }
+
+      function clearSearch() {
+        document.getElementById('dramaSearch').value = '';
+        currentSearch = '';
+        document.getElementById('clearSearchBtn').add('hidden');
+        updateViewsState();
+      }
+
+      function filterLanguage(lang) {
+        currentLanguage = lang;
+        
+        // Deactivate all pills, activate clicked one
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+          pill.className = "filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-gray-400 hover:text-white transition-all duration-300 cursor-pointer";
+        });
+
+        const activePill = document.getElementById(`pill-${lang}`);
+        if (activePill) {
+          activePill.className = "filter-pill px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-pink text-white transition-all duration-300 cursor-pointer shadow-[0_0_12px_rgba(255,45,107,0.35)]";
+        }
+
+        updateViewsState();
+      }
+
+      // State Switching Interface Logic
+      function updateViewsState() {
+        const homeView = document.getElementById('defaultHomeView');
+        const resultsView = document.getElementById('searchResultsView');
+        const searchHeader = document.getElementById('searchResultsHeader');
+        const searchSub = document.getElementById('searchResultsSub');
+        const emptyState = document.getElementById('searchResultsEmptyState');
+        const resultsGrid = document.getElementById('searchResultsGrid');
+
+        // Check if there is an active search or an active language filter != 'All'
+        if (currentSearch || currentLanguage !== 'All') {
+          homeView.classList.replace('block', 'hidden');
+          resultsView.classList.replace('hidden', 'block');
+
+          // Filter dramas based on search text AND chosen active language
+          const matchingDramas = DRAMA_DATA.filter(drama => {
+            // Language matching check
+            const languageMatches = (currentLanguage === 'All' || drama.language.toLowerCase() === currentLanguage.toLowerCase());
+            
+            // Search string matching checks (Case Insensitive matches across title, genre, language, platforms)
+            const searchVal = currentSearch.toLowerCase();
+            const textMatches = !currentSearch || (
+              drama.title.toLowerCase().includes(searchVal) ||
+              drama.genre.toLowerCase().includes(searchVal) ||
+              drama.language.toLowerCase().includes(searchVal) ||
+              drama.platform.toLowerCase().includes(searchVal)
+            );
+
+            return languageMatches && textMatches;
+          });
+
+          // Set dynamic search sub title descriptions
+          let filterMessage = '';
+          if (currentLanguage !== 'All') {
+            filterMessage += ` ${currentLanguage} dramas`;
+          }
+          if (currentSearch) {
+            filterMessage += ` matching "${currentSearch}"`;
+          }
+
+          searchHeader.innerText = currentSearch ? 'Filtered Curation' : `${currentLanguage} Curation`;
+          searchSub.innerText = `We found ${matchingDramas.length} free${filterMessage}`;
+
+          // If no results, show the requested community tip empty state
+          if (matchingDramas.length === 0) {
+            emptyState.classList.replace('hidden', 'block');
+            resultsGrid.classList.replace('grid', 'hidden');
+          } else {
+            emptyState.classList.replace('block', 'hidden');
+            resultsGrid.classList.replace('hidden', 'grid');
+            
+            // Populate grid with matching results
+            resultsGrid.innerHTML = matchingDramas.map(drama => createCardHTML(drama, false)).join('');
+          }
+        } else {
+          // Restore beautiful home curation layout
+          homeView.classList.replace('hidden', 'block');
+          resultsView.classList.replace('block', 'hidden');
+        }
+      }
+
+      // Reset overall search state directly
+      function clearSearchAndFilters() {
+        document.getElementById('dramaSearch').value = '';
+        currentSearch = '';
+        filterLanguage('All');
+        document.getElementById('clearSearchBtn').classList.add('hidden');
+        updateViewsState();
+      }
+
+      function resetSearchAndFilters(e) {
+        if (e) {
+          e.preventDefault();
+        }
+        clearSearchAndFilters();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function focusSearch() {
+        const input = document.getElementById('dramaSearch');
+        input.focus();
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Scrolling trigger helper
+      function scrollToElement(id, event) {
+        if (event) {
+          event.preventDefault();
+        }
+        const el = document.getElementById(id);
+        if (el) {
+          const offsetHeaderHeight = 80; // height of sticky header
+          const topPosition = el.getBoundingClientRect().top + window.scrollY - offsetHeaderHeight;
+          window.scrollTo({ top: topPosition, behavior: 'smooth' });
+        }
+      }
+
+      // Horizontal Slider Scroll mechanics
+      function scrollTrending(direction) {
+        const row = document.getElementById('trendingRow');
+        const cardSize = 280; // approximate width of slider cards
+        row.scrollBy({ left: direction * cardSize, behavior: 'smooth' });
+      }
+
+      // 6. MODAL INTERACTIVE DIALOG LOGIC
+      function openTipModal() {
+        const modal = document.getElementById('tipModal');
+        const modalContent = document.getElementById('tipModalContent');
+        const successBanner = document.getElementById('tipModalSuccess');
+
+        // Hide success banner of first renders
+        successBanner.classList.add('hidden');
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          modal.classList.replace('opacity-0', 'opacity-100');
+          modalContent.classList.replace('scale-95', 'scale-100');
+        }, 10);
+      }
+
+      function closeTipModal() {
+        const modal = document.getElementById('tipModal');
+        const modalContent = document.getElementById('tipModalContent');
+
+        modal.classList.replace('opacity-100', 'opacity-0');
+        modalContent.classList.replace('scale-100', 'scale-95');
+        
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          document.getElementById('tipForm').reset();
+        }, 300);
+      }
+
+      function handleBackdropClick(event) {
+        if (event.target.id === 'tipModal') {
+          closeTipModal();
+        }
+      }
+
+      // Submit community tip dynamically updating localStorage
+      function submitCommunityTip(event) {
+        event.preventDefault();
+
+        const dramaName = document.getElementById('formDramaName').value.trim();
+        const platform = document.getElementById('formPlatform').value.trim();
+        const tipText = document.getElementById('formTip').value.trim();
+        const yourName = document.getElementById('formYourName').value.trim() || 'Anonymous Fan';
+
+        // Custom avatar gradient options
+        const gradients = [
+          "from-pink-500 to-rose-500",
+          "from-violet-500 to-purple-500",
+          "from-blue-500 to-indigo-500",
+          "from-emerald-500 to-teal-500",
+          "from-amber-500 to-orange-500",
+          "from-cyan-500 to-teal-500"
+        ];
+        const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+
+        const newTip = {
+          id: 'tip-' + Date.now(),
+          name: yourName,
+          drama: dramaName,
+          tip: `${platform} — ${tipText}`,
+          upvotes: 1,
+          avatarGradient: randomGradient
+        };
+
+        // Pull stored, append, write back
+        const tips = JSON.parse(localStorage.getItem('DRAMA_TIPS_STORE')) || DEFAULT_COMMUNITY_TIPS;
+        tips.unshift(newTip); // add to top
+        localStorage.setItem('DRAMA_TIPS_STORE', JSON.stringify(tips));
+
+        // Show internal feedback success inside the modal directly
+        const successBanner = document.getElementById('tipModalSuccess');
+        successBanner.classList.remove('hidden');
+        
+        // Refresh community list dynamic state
+        renderCommunityTips();
+
+        // Close after a short elegant delay to showcase the success message
+        setTimeout(() => {
+          closeTipModal();
+        }, 2500);
+      }
+    </script>
+  </body>
+</html>

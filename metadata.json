@@ -1,0 +1,6 @@
+{
+  "name": "DramaMap",
+  "description": "No VPN. No Ads. Just Drama. Find where to watch your favorite dramas for free.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
